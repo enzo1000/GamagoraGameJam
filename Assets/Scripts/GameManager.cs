@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] 
     private GameObject _canvaEndGame;
+
+    [SerializeField] private Image _lifeBar;
      
     private float _time;
     private bool _isPlaying;
@@ -34,8 +37,8 @@ public class GameManager : MonoBehaviour
             return;
         
         _time += Time.deltaTime;
-
-        if (_time >= 50f)
+        ReduceLifeBar();
+        if (_lifeBar.fillAmount == 0f)
         {
             EndGameBecauseUNoob();
         }
@@ -44,6 +47,11 @@ public class GameManager : MonoBehaviour
     public void AddToScore()
     {
         _score++;
+    }
+    
+    private void ReduceLifeBar()
+    {
+        _lifeBar.fillAmount -= spawner.GetAllDamage();
     }
 
     public void StartThisGeniousGame()

@@ -68,4 +68,14 @@ public class EyeSpawner : MonoBehaviour
         }
         _timer -= Time.deltaTime;
     }
+
+    public float GetAllDamage()
+    {
+        float allDamage = 0f;
+        foreach (Transform child in transform)
+        {
+            allDamage += child.GetComponent<Eye>().GetALotOfDamage();
+        }
+        return allDamage;
+    }
 }
