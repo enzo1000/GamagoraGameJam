@@ -13,7 +13,7 @@ public class EyeSpawner : MonoBehaviour
     }
     
     [Header("Eye Spawner: The total probability must be 100")]
-    [SerializeField] 
+    [SerializeField]
     private List<EyeProba> _eyePrefabs = new();
 
     [SerializeField] 
