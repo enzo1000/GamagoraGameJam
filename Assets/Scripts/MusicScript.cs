@@ -2,13 +2,22 @@ using UnityEngine;
 
 public class MusicScript : MonoBehaviour
 {
+    public static MusicScript instance;
     public AudioClip BoutonMenuSFX;
 
     private AudioSource audioSource;
 
-    private void Start()
+    private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        if (instance == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void PlayBoutonMenuSFX()
