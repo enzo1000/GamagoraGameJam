@@ -200,6 +200,7 @@ public class Draw : MonoBehaviour
                 }
                 if (compt >= 5)
                 {
+                    MusicScript.instance.PlayExorcistSFX();
                     recoverCrayBar(crayRecover);
                     eye.gameObject.GetComponent<Eye>().DoALotOfDamage();
                 }
