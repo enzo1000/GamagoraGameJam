@@ -46,7 +46,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _eyePrefabs:
   - prefab: {fileID: 2917780866133351073, guid: a099275501db0a74fab6618575de07e4, type: 3}
-    probability: 100
-  _spawnInterval: 10
+    probability: 20
+  - prefab: {fileID: 6839530794733173896, guid: e6a110f9b77b8dc47a53747e3e42be8f, type: 3}
+    probability: 20
+  - prefab: {fileID: 3121098594718658993, guid: e4eb3a8044b073a4fb7205483747a07b, type: 3}
+    probability: 20
+  - prefab: {fileID: 6237362668425811387, guid: 467cf866707c25046a9917be3e11d661, type: 3}
+    probability: 20
+  - prefab: {fileID: 6726856852480106046, guid: fa1968e46bfd606469c2361c41b641c7, type: 3}
+    probability: 20
+  _spawnInterval: 5
   _leftPoint: {x: -2, y: -1}
   _rightPoint: {x: 2, y: 1}

@@ -24,6 +24,7 @@ public class Eye : MonoBehaviour
     private void Start()
     {
         spawnTime = 0;
+        GetComponent<Animator>().SetInteger("life", _nbDraw);
     }
 
     //Inflige les degats
@@ -50,5 +51,6 @@ public class Eye : MonoBehaviour
         }
         
         //ChangeAnimator
+        GetComponent<Animator>().SetInteger("life", _nbDraw);
     }
 }
