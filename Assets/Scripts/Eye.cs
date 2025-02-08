@@ -11,7 +11,7 @@ public class Eye : MonoBehaviour
     }
     
     [SerializeField] 
-    [Range(0.000000001f, 0.00001f)] private float _damage;
+    [Range(0.000000001f, 0.001f)] private float _damage;
 
     [SerializeField] 
     private int _nbDraw;
