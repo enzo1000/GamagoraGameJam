@@ -63,7 +63,6 @@ public class EyeSpawner : MonoBehaviour
             
             GameObject go = Instantiate(eyePrefab.prefab, new(), Quaternion.identity, transform);
             go.transform.localPosition = spawnPos;
-            GameManager.Instance.AddToScore();
             _timer = _spawnInterval;
         }
         _timer -= Time.deltaTime;
