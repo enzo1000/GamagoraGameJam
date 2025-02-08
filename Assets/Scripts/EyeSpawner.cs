@@ -25,11 +25,20 @@ public class EyeSpawner : MonoBehaviour
     [SerializeField] 
     private Vector2 _rightPoint;
     
-    
     private float _timer = 0f;
+    private bool _isPlaying = false;
+
+    public bool IsPlaying
+    {
+        get => _isPlaying; 
+        set => _isPlaying = value;
+    }
     
     void Update()
     {
+        if (!_isPlaying)
+            return;
+        
         if (_timer < 0f)
         {
             Vector2 spawnPos = new();
@@ -54,6 +63,7 @@ public class EyeSpawner : MonoBehaviour
             
             GameObject go = Instantiate(eyePrefab.prefab, new(), Quaternion.identity, transform);
             go.transform.localPosition = spawnPos;
+            GameManager.Instance.AddToScore();
             _timer = _spawnInterval;
         }
         _timer -= Time.deltaTime;
