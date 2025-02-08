@@ -60,7 +60,7 @@ public class Draw : MonoBehaviour
         else if (Input.GetMouseButtonUp(0))
         {
             drawPoints.Clear();
-            //Destroy(brushInstance);
+            Destroy(brushInstance);
         }
     }
 
@@ -124,8 +124,12 @@ public class Draw : MonoBehaviour
             averagePoint += point;
         }
         averagePoint /= drawPoints.Count;
-        GameObject centerSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        centerSphere.transform.position = averagePoint;
+
+        float minScale = processMinDist(averagePoint);
+        damageAllEye(minScale, averagePoint);
+
+        //GameObject centerSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //centerSphere.transform.position = averagePoint;
     }
 
     /// <summary>
@@ -146,6 +150,44 @@ public class Draw : MonoBehaviour
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// Function dedicated to process le rayon minimal du cercle trace afin de faire des degats aux yeux
+    /// </summary>
+    /// <param name="averagePoint"></param>
+    /// <returns></returns>
+    private float processMinDist(Vector3 averagePoint)
+    {
+        float minDist = float.MaxValue;
+        foreach (Vector3 point in drawPoints)
+        {
+            if (minDist > Vector3.Distance(point, averagePoint))
+            {
+                minDist = Vector3.Distance(point, averagePoint);
+            }
+        }
+        return minDist;
+    }
+
+    private void damageAllEye(float actionrange, Vector3 centerPoint)
+    {
+        foreach (Transform eye in GameObject.Find("EyeSpawner").transform.GetComponentInChildren<Transform>())
+        {
+            if (Vector3.Distance(eye.position, centerPoint) < actionrange)
+            {
+                int compt = 0;
+                Transform[] eyePoints = eye.gameObject.transform.GetComponentsInChildren<Transform>();
+                foreach (Transform ptn in eyePoints)
+                {
+                    compt++;
+                }
+                if (compt >= 5)
+                {
+                    eye.gameObject.GetComponent<Eye>().DoALotOfDamage();
+                }
+            }
+        }
     }
 
     private void reduceCrayBar()

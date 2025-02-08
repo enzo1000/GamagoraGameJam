@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] 
     private GameObject _canvaEndGame;
-    
      
     private float _time;
     private bool _isPlaying;
@@ -52,7 +51,6 @@ public class GameManager : MonoBehaviour
         _isPlaying = true;
         _time = 0;
         _score = 0;
-        //ToDo : Remove the comment
         spawner.IsPlaying = true;
         gameObject.GetComponent<Draw>().IsPlaying = true;
         _canvaMenu.SetActive(false);

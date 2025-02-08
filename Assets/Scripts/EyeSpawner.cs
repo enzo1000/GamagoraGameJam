@@ -41,10 +41,11 @@ public class EyeSpawner : MonoBehaviour
         
         if (_timer < 0f)
         {
-            Vector2 spawnPos = new();
+            Vector3 spawnPos = new();
             
             spawnPos.x = Random.Range(_leftPoint.x, _rightPoint.x);
             spawnPos.y = Random.Range(_leftPoint.y, _rightPoint.y);
+            spawnPos.z = 6.5f;
 
             float v = Random.Range(0, 100);
             EyeProba eyePrefab = _eyePrefabs[0];
@@ -59,7 +60,6 @@ public class EyeSpawner : MonoBehaviour
                 }
                 probability += _eyePrefabs[i].probability;
             }
-            
             
             GameObject go = Instantiate(eyePrefab.prefab, new(), Quaternion.identity, transform);
             go.transform.localPosition = spawnPos;
