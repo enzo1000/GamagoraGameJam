@@ -7,6 +7,7 @@ public class Draw : MonoBehaviour
 {
     public Camera cam;
     public Image crayBar;
+    public Image crayBarRed;
     public GameObject brush;
 
     [Range(0.001f, 0.1f)] public float crayUsage;
