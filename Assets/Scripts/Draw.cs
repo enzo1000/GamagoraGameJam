@@ -16,9 +16,10 @@ public class Draw : MonoBehaviour
     private LineRenderer brushLR;
     private Vector3 lastMousePos;
     private List<Vector2> drawPoints;
-    private float crayAmount;
-    public bool _isPlaying = false;
 
+    private float crayAmount;
+    private float initialCrayAmount = 1f;
+    private bool _isPlaying = false;
     public bool IsPlaying
     {
         get => _isPlaying; 
@@ -30,6 +31,7 @@ public class Draw : MonoBehaviour
     {
         drawPoints = new();
         crayAmount = crayBar.fillAmount;
+        crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmount);
     }
 
     //Draw
@@ -47,6 +49,7 @@ public class Draw : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            initialCrayAmount = crayAmount;
             CreateBrush();
         }
         else if (Input.GetMouseButton(0))
@@ -62,6 +65,8 @@ public class Draw : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
+            crayAmount = initialCrayAmount;
+            crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmount);
             drawPoints.Clear();
             Destroy(brushInstance);
         }
@@ -93,25 +98,22 @@ public class Draw : MonoBehaviour
     /// <param name="pointPos"></param>
     private void AddAPoint(Vector3 pointPos)
     {
+        reduceCrayBar();
+        if (crayAmount <= 0f)
+        {
+            return;
+        }
+
         brushLR.positionCount++;
         int positionIndex = brushLR.positionCount - 1;
         brushLR.SetPosition(positionIndex, pointPos);
-
-        reduceCrayBar();
         
         if (processCrossingGigaChad(pointPos))
         {
             averageCenterEnjoyer();
-            DestroyTheCrayAndWorld();
-            return;
+            //DestroyTheCrayAndWorld();
         }
         
-        if (crayAmount <= 0f)
-        {
-            DestroyTheCrayAndWorld();
-            return;
-        }
-
         //Debug purpose
         //GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         //sph.transform.position = pointPos;
@@ -139,6 +141,7 @@ public class Draw : MonoBehaviour
 
         float minScale = processMinDist(averagePoint);
         damageAllEye(minScale, averagePoint);
+        drawPoints.Clear();
 
         //GameObject centerSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         //centerSphere.transform.position = averagePoint;
@@ -157,17 +160,11 @@ public class Draw : MonoBehaviour
             if (Vector3.Distance(pts, nouveauPoint) < 0.25f)
             {
                 brushLR.positionCount = 0;
+                initialCrayAmount = crayAmount;
                 return true;
             }
         }
         return false;
-    }
-    
-    private void DestroyTheCrayAndWorld()
-    {
-        drawPoints.Clear();
-        Destroy(brushInstance);
-        recoverCrayBar();
     }
 
     /// <summary>
@@ -202,6 +199,7 @@ public class Draw : MonoBehaviour
                 }
                 if (compt >= 5)
                 {
+                    recoverCrayBar(crayRecover);
                     eye.gameObject.GetComponent<Eye>().DoALotOfDamage();
                 }
             }
@@ -216,9 +214,9 @@ public class Draw : MonoBehaviour
         
         crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmount);
     }
-    private void recoverCrayBar()
+    private void recoverCrayBar(float recoverAmount)
     {
-        crayAmount += crayRecover;
+        crayAmount += recoverAmount;
         if (crayAmount > 1f)
             crayAmount = 1f;
         crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmount);
