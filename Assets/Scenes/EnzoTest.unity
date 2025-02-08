@@ -204,7 +204,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3411440276330757813, guid: 051f60152639a154cbf200262a268289, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4518492787125092263, guid: 051f60152639a154cbf200262a268289, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1052,6 +1052,7 @@ MonoBehaviour:
   brush: {fileID: 3734407752576004256, guid: 8da6b8a20b40cb9469207b24cc5bf33b, type: 3}
   crayUsage: 0.05
   crayRecover: 1
+  _isPlaying: 1
 --- !u!4 &1858105587
 Transform:
   m_ObjectHideFlags: 0

@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
-    
     public static GameManager Instance => instance;
     
     [SerializeField] 
@@ -37,9 +36,8 @@ public class GameManager : MonoBehaviour
         
         _time += Time.deltaTime;
 
-        if (_time >= 2f)
+        if (_time >= 50f)
         {
-            _isPlaying = false;
             EndGameBecauseUNoob();
         }
     }
@@ -55,8 +53,8 @@ public class GameManager : MonoBehaviour
         _time = 0;
         _score = 0;
         //ToDo : Remove the comment
-        // spawner.IsPlaying = true;
-        // gameObject.GetComponent<Draw>().IsPlaying = true;
+        spawner.IsPlaying = true;
+        gameObject.GetComponent<Draw>().IsPlaying = true;
         _canvaMenu.SetActive(false);
     }
 

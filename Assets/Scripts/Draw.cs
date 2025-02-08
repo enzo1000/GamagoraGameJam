@@ -15,7 +15,7 @@ public class Draw : MonoBehaviour
     private LineRenderer brushLR;
     private Vector3 lastMousePos;
     private List<Vector2> drawPoints;
-    private bool _isPlaying = false;
+    public bool _isPlaying = false;
 
     public bool IsPlaying
     {
