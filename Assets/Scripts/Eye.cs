@@ -40,6 +40,7 @@ public class Eye : MonoBehaviour
         if (_eyeType == EyeType.Other)
         {
             Destroy(this.gameObject);
+            GameManager.Instance.AddToScore();
             return;
         }
 
@@ -47,6 +48,7 @@ public class Eye : MonoBehaviour
         if (_nbDraw == 0)
         {
             Destroy(this.gameObject);
+            GameManager.Instance.AddToScore();
             return;
         }
         
