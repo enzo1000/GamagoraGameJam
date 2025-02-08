@@ -3,6 +3,10 @@ using UnityEngine;
 public class MusicScript : MonoBehaviour
 {
     public static MusicScript instance;
+
+    [Header("Menu Musique")]
+    public AudioClip MenuMusique;
+
     [Header("Menu SFX")]
     public AudioClip BoutonMenuSFX;
 
@@ -10,6 +14,16 @@ public class MusicScript : MonoBehaviour
     public AudioClip ExorcistSFX1;
     public AudioClip ExorcistSFX2;
     public AudioClip ExorcistSFX3;
+
+    [Header("SFX First Enviro")]
+    public AudioClip StepsSFX;
+    public AudioClip TockingSFX;
+    public AudioClip GrincementSFX;
+
+    [Header("All SFX")]
+    public AudioClip WhispeingSFX;
+    public AudioClip BreathingSFX;
+    public AudioClip HeartBeatingSFX;
 
     private AudioSource audioSource;
 
@@ -26,10 +40,20 @@ public class MusicScript : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        PlayMenuMusique();
+    }
+
+    public void PlayMenuMusique()
+    {
+        audioSource.clip = MenuMusique;
+        audioSource.Play();
+    }
+
     public void PlayBoutonMenuSFX()
     {
-        audioSource.clip = BoutonMenuSFX;
-        audioSource.Play();
+        audioSource.PlayOneShot(BoutonMenuSFX);
     }
 
     public void PlayExorcistSFX()
@@ -37,14 +61,13 @@ public class MusicScript : MonoBehaviour
         int rand = Mathf.FloorToInt(Random.Range(0, 3));
         if (rand == 0)
         {
-            audioSource.clip = ExorcistSFX1;
+            audioSource.PlayOneShot(ExorcistSFX1);
         } else if (rand == 1)
         {
-            audioSource.clip = ExorcistSFX2;
+            audioSource.PlayOneShot(ExorcistSFX2);
         } else
         {
-            audioSource.clip = ExorcistSFX3;
+            audioSource.PlayOneShot(ExorcistSFX3);
         }
-        audioSource.Play();
     }
 }
