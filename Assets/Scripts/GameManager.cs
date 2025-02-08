@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         _time = 0;
         _score = 0;
         spawner.IsPlaying = true;
+        GetComponent<MusicScript>().PlayBoutonMenuSFX();
         gameObject.GetComponent<Draw>().IsPlaying = true;
         _canvaMenu.SetActive(false);
     }
