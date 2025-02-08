@@ -207,7 +207,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 606, y: -245.00005}
+  m_AnchoredPosition: {x: 606, y: -107}
   m_SizeDelta: {x: 100, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7629306109118921568
@@ -980,7 +980,7 @@ RectTransform:
   m_GameObject: {fileID: 5264001170045190436}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 30, y: 11, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5792552898142367365}
@@ -1055,7 +1055,7 @@ RectTransform:
   m_GameObject: {fileID: 5485475918138529075}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 19, y: 11, z: 1}
+  m_LocalScale: {x: 30, y: 11, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1893855006675120787}
@@ -1424,9 +1424,8 @@ MonoBehaviour:
   cam: {fileID: 0}
   crayBar: {fileID: 6766893035137028005}
   brush: {fileID: 3734407752576004256, guid: 8da6b8a20b40cb9469207b24cc5bf33b, type: 3}
-  crayUsage: 0.0499
+  crayUsage: 0.0163
   crayRecover: 1
-  _isPlaying: 0
 --- !u!114 &1003945895530970760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2018,7 +2017,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 800, y: -245.00005}
+  m_AnchoredPosition: {x: 800, y: -106.99997}
   m_SizeDelta: {x: 100, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5794199543364062462
