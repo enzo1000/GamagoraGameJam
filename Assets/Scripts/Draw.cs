@@ -1,20 +1,22 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 public class Draw : MonoBehaviour
 {
-    
     public Camera cam;
 
     public GameObject brush;
     private GameObject brushInstance;
     private LineRenderer brushLR;
-    private Vector2 lastMousePos;
+    private Vector3 lastMousePos;
     private List<Vector2> drawPoints;
+    private List<GameObject> debugSphereList;
 
     private void Start()
     {
         drawPoints = new();
+        debugSphereList = new();
     }
 
     private void Update()
@@ -30,9 +32,10 @@ public class Draw : MonoBehaviour
         }
         else if (Input.GetMouseButton(0))
         {
-            Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0;
 
-            if (mousePos != lastMousePos)
+            if (Vector3.Distance(mousePos, lastMousePos) > 0.3f)
             {
                 AddAPoint(mousePos);
                 lastMousePos = mousePos;
@@ -40,6 +43,8 @@ public class Draw : MonoBehaviour
         }
         else
         {
+            debugSphereList.Clear();
+            drawPoints.Clear();
             Destroy(brushInstance);
         }
     }
@@ -49,10 +54,11 @@ public class Draw : MonoBehaviour
     /// </summary>
     private void CreateBrush()
     {
-        brushInstance = Instantiate(brush);
-        brushLR = brushInstance.GetComponent<LineRenderer>();
+        Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
 
-        Vector2 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        brushInstance = Instantiate(brush, mousePos, Quaternion.identity);
+        brushLR = brushInstance.GetComponent<LineRenderer>();
 
         //Size du brush à 2 donc deux points à l'initialisation
         brushLR.SetPosition(0, mousePos);
@@ -63,14 +69,24 @@ public class Draw : MonoBehaviour
     /// Assure la continuité du tracé en stockant ses pts dans un tableau
     /// </summary>
     /// <param name="pointPos"></param>
-    private void AddAPoint(Vector2 pointPos)
+    private void AddAPoint(Vector3 pointPos)
     {
         brushLR.positionCount++;
         int positionIndex = brushLR.positionCount - 1;
         brushLR.SetPosition(positionIndex, pointPos);
-        
+
+        processCrossingGigaChad(pointPos);
+
+        GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sph.transform.position = pointPos;
+        sph.transform.localScale *= 0.1f;
+        debugSphereList.Add(sph);
+
         //Stocke les points du tracé dans le tableau drawPoints
         drawPoints.Add(pointPos);
+        Mesh mesh = new();
+        brushLR.BakeMesh(mesh, true);
+        brushInstance.GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
     /// <summary>
@@ -79,5 +95,16 @@ public class Draw : MonoBehaviour
     private void averageCenterEnjoyer()
     {
 
+    }
+
+    private void processCrossingGigaChad(Vector3 nouveauPoint)
+    {
+        foreach (Vector3 pts in drawPoints)
+        {
+            if (Vector3.Distance(pts, nouveauPoint) < 0.3f)
+            {
+                Debug.Log("Ouais les proche le con");
+            }
+        }
     }
 }
