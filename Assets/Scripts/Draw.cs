@@ -15,6 +15,13 @@ public class Draw : MonoBehaviour
     private LineRenderer brushLR;
     private Vector3 lastMousePos;
     private List<Vector2> drawPoints;
+    private bool _isPlaying = false;
+
+    public bool IsPlaying
+    {
+        get => _isPlaying; 
+        set => _isPlaying = value;
+    }
 
     //Init list at startup
     private void Start()
@@ -25,6 +32,8 @@ public class Draw : MonoBehaviour
     //Draw
     private void Update()
     {
+        if (!_isPlaying)
+            return;
         Drawing();
     }
 
