@@ -1,11 +1,16 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class Draw : MonoBehaviour
 {
     public Camera cam;
-
+    public Image crayBar;
     public GameObject brush;
+
+    [Range(0.001f, 0.1f)] public float crayUsage;
+    [Range(0.1f, 1f)] public float crayRecover;
+
     private GameObject brushInstance;
     private LineRenderer brushLR;
     private Vector3 lastMousePos;
@@ -84,6 +89,8 @@ public class Draw : MonoBehaviour
             drawPoints.Clear();
         }
 
+        reduceCrayBar();
+
         //Debug purpose
         //GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         //sph.transform.position = pointPos;
@@ -124,9 +131,20 @@ public class Draw : MonoBehaviour
         {
             if (Vector3.Distance(pts, nouveauPoint) < 0.25f)
             {
+                recoverCrayBar();
+                brushLR.positionCount = 0;
                 return true;
             }
         }
         return false;
+    }
+
+    private void reduceCrayBar()
+    {
+        crayBar.fillAmount -= crayUsage;
+    }
+    private void recoverCrayBar()
+    {
+        crayBar.fillAmount += crayRecover;
     }
 }
