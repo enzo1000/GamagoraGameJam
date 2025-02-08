@@ -51,7 +51,7 @@ public class Draw : MonoBehaviour
         else if (Input.GetMouseButtonUp(0))
         {
             drawPoints.Clear();
-            Destroy(brushInstance);
+            //Destroy(brushInstance);
         }
     }
 

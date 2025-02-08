@@ -26,12 +26,14 @@ public class Eye : MonoBehaviour
         spawnTime = 0;
     }
 
-    public float GeALotOfDamage()
+    //Inflige les degats
+    public float GetALotOfDamage()
     {
         spawnTime += Time.deltaTime;
         return _damage * spawnTime;
     }
 
+    //Prend les degats dans le prefab
     public void DoALotOfDamage()
     {
         if (_eyeType == EyeType.Other)
