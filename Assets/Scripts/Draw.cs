@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine.UI;
 
 public class Draw : MonoBehaviour
@@ -15,6 +16,7 @@ public class Draw : MonoBehaviour
     private LineRenderer brushLR;
     private Vector3 lastMousePos;
     private List<Vector2> drawPoints;
+    private float crayAmount;
     public bool _isPlaying = false;
 
     public bool IsPlaying
@@ -27,6 +29,7 @@ public class Draw : MonoBehaviour
     private void Start()
     {
         drawPoints = new();
+        crayAmount = crayBar.fillAmount;
     }
 
     //Draw
@@ -62,6 +65,8 @@ public class Draw : MonoBehaviour
             drawPoints.Clear();
             Destroy(brushInstance);
         }
+        //else
+           //DestroyTheCrayAndWorld();
     }
 
     /// <summary>
@@ -92,13 +97,20 @@ public class Draw : MonoBehaviour
         int positionIndex = brushLR.positionCount - 1;
         brushLR.SetPosition(positionIndex, pointPos);
 
+        reduceCrayBar();
+        
         if (processCrossingGigaChad(pointPos))
         {
             averageCenterEnjoyer();
-            drawPoints.Clear();
+            DestroyTheCrayAndWorld();
+            return;
         }
-
-        reduceCrayBar();
+        
+        if (crayAmount <= 0f)
+        {
+            DestroyTheCrayAndWorld();
+            return;
+        }
 
         //Debug purpose
         //GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -144,12 +156,18 @@ public class Draw : MonoBehaviour
         {
             if (Vector3.Distance(pts, nouveauPoint) < 0.25f)
             {
-                recoverCrayBar();
                 brushLR.positionCount = 0;
                 return true;
             }
         }
         return false;
+    }
+    
+    private void DestroyTheCrayAndWorld()
+    {
+        drawPoints.Clear();
+        Destroy(brushInstance);
+        recoverCrayBar();
     }
 
     /// <summary>
@@ -192,10 +210,17 @@ public class Draw : MonoBehaviour
 
     private void reduceCrayBar()
     {
-        crayBar.fillAmount -= crayUsage;
+        crayAmount -= crayUsage;
+        if (crayAmount < 0f)
+            crayAmount = 0f;
+        
+        crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmount);
     }
     private void recoverCrayBar()
     {
-        crayBar.fillAmount += crayRecover;
+        crayAmount += crayRecover;
+        if (crayAmount > 1f)
+            crayAmount = 1f;
+        crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmount);
     }
 }
