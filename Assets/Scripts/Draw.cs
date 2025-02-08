@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UIElements;
 
 public class Draw : MonoBehaviour
 {
@@ -11,19 +10,22 @@ public class Draw : MonoBehaviour
     private LineRenderer brushLR;
     private Vector3 lastMousePos;
     private List<Vector2> drawPoints;
-    private List<GameObject> debugSphereList;
 
+    //Init list at startup
     private void Start()
     {
         drawPoints = new();
-        debugSphereList = new();
     }
 
+    //Draw
     private void Update()
     {
         Drawing();
     }
 
+    /// <summary>
+    /// Fonction de drawing principale
+    /// </summary>
     private void Drawing()
     {
         if (Input.GetMouseButtonDown(0))
@@ -41,9 +43,8 @@ public class Draw : MonoBehaviour
                 lastMousePos = mousePos;
             }
         }
-        else
+        else if (Input.GetMouseButtonUp(0))
         {
-            debugSphereList.Clear();
             drawPoints.Clear();
             Destroy(brushInstance);
         }
@@ -67,6 +68,8 @@ public class Draw : MonoBehaviour
 
     /// <summary>
     /// Assure la continuité du tracé en stockant ses pts dans un tableau
+    /// verifie le croisement avec les precedents points
+    /// place le point central du cercle une fois le croisement effectue
     /// </summary>
     /// <param name="pointPos"></param>
     private void AddAPoint(Vector3 pointPos)
@@ -75,12 +78,16 @@ public class Draw : MonoBehaviour
         int positionIndex = brushLR.positionCount - 1;
         brushLR.SetPosition(positionIndex, pointPos);
 
-        processCrossingGigaChad(pointPos);
+        if (processCrossingGigaChad(pointPos))
+        {
+            averageCenterEnjoyer();
+            drawPoints.Clear();
+        }
 
-        GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        sph.transform.position = pointPos;
-        sph.transform.localScale *= 0.1f;
-        debugSphereList.Add(sph);
+        //Debug purpose
+        //GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        //sph.transform.position = pointPos;
+        //sph.transform.localScale *= 0.1f;
 
         //Stocke les points du tracé dans le tableau drawPoints
         drawPoints.Add(pointPos);
@@ -91,20 +98,35 @@ public class Draw : MonoBehaviour
 
     /// <summary>
     /// Process tout les points stockés dans la liste et essaye de définir un point central au tracé
+    /// ce point est calcule en partant du principe que le joueur trace un cercle
     /// </summary>
     private void averageCenterEnjoyer()
     {
-
+        Vector3 averagePoint = Vector3.zero;
+        foreach(Vector3 point in drawPoints)
+        {
+            averagePoint += point;
+        }
+        averagePoint /= drawPoints.Count;
+        GameObject centerSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        centerSphere.transform.position = averagePoint;
     }
 
-    private void processCrossingGigaChad(Vector3 nouveauPoint)
+    /// <summary>
+    /// Si le nouveauPoint represente un croisement avec les anciens points alors
+    /// on return true. Sert a informer de la fin d'un cercle autour d'un oeil.
+    /// </summary>
+    /// <param name="nouveauPoint"></param>
+    /// <returns>bool</returns>
+    private bool processCrossingGigaChad(Vector3 nouveauPoint)
     {
         foreach (Vector3 pts in drawPoints)
         {
-            if (Vector3.Distance(pts, nouveauPoint) < 0.3f)
+            if (Vector3.Distance(pts, nouveauPoint) < 0.25f)
             {
-                Debug.Log("Ouais les proche le con");
+                return true;
             }
         }
+        return false;
     }
 }
