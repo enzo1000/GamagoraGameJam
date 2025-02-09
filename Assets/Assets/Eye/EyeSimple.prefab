@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 511dc8a5e87cd2843b3ee976bdda666d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0.00001
+  _damage: 0.00002
   _nbDraw: 0
   _eyeType: 0
 --- !u!212 &5304293418910810660

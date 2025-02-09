@@ -58,3 +58,4 @@ MonoBehaviour:
   _spawnInterval: 5
   _leftPoint: {x: -2, y: -1}
   _rightPoint: {x: 2, y: 1}
+  _timeDiminutionBetweenSpawn: 0.0001

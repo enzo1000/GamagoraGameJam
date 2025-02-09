@@ -834,6 +834,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 812644512264146611, guid: 59335b24498df6549a4346d0d24a9495, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -6.5999985
+      objectReference: {fileID: 0}
     - target: {fileID: 862200541014245090, guid: 59335b24498df6549a4346d0d24a9495, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1010,6 +1014,22 @@ PrefabInstance:
       propertyPath: DestroyingDoorSFX
       value: 
       objectReference: {fileID: 8300000, guid: b1aa69ec27d6bab4281a200fd0fb3f63, type: 3}
+    - target: {fileID: 4834146964166276017, guid: 59335b24498df6549a4346d0d24a9495, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -6.9000015
+      objectReference: {fileID: 0}
+    - target: {fileID: 5075696484722969775, guid: 59335b24498df6549a4346d0d24a9495, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.799999
+      objectReference: {fileID: 0}
+    - target: {fileID: 5993286763672385217, guid: 59335b24498df6549a4346d0d24a9495, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -8.600002
+      objectReference: {fileID: 0}
+    - target: {fileID: 6886505017782346643, guid: 59335b24498df6549a4346d0d24a9495, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -5.799999
+      objectReference: {fileID: 0}
     - target: {fileID: 7112679596084813588, guid: 59335b24498df6549a4346d0d24a9495, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1034,6 +1054,10 @@ PrefabInstance:
     - target: {fileID: 569325434595138830, guid: f6f2c4f15ac983842a91a514bb1ef4c8, type: 3}
       propertyPath: m_Name
       value: EyeSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 4738350093926755925, guid: f6f2c4f15ac983842a91a514bb1ef4c8, type: 3}
+      propertyPath: _timeDiminutionBetweenSpawn
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8272518261441414467, guid: f6f2c4f15ac983842a91a514bb1ef4c8, type: 3}
       propertyPath: m_LocalPosition.x

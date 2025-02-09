@@ -25,6 +25,9 @@ public class EyeSpawner : MonoBehaviour
     [SerializeField] 
     private Vector2 _rightPoint;
     
+    [SerializeField] 
+    [Range(0.0001f, 0.1f)] private float _timeDiminutionBetweenSpawn;
+    
     private float _timer = 0f;
     private bool _isPlaying = false;
 
@@ -66,6 +69,11 @@ public class EyeSpawner : MonoBehaviour
             _timer = _spawnInterval;
         }
         _timer -= Time.deltaTime;
+    }
+
+    public void DiminueTimerAndDie()
+    {
+        _spawnInterval -= _timeDiminutionBetweenSpawn;
     }
 
     public float GetAllDamage()
