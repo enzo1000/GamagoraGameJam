@@ -104,6 +104,8 @@ public class GameManager : MonoBehaviour
 
     public void EndGameBecauseUNoob()
     {
+        StopAllCoroutines();
+        MusicScript.instance.PlayDefeateSFX();
         _isPlaying = false;
         spawner.IsPlaying = false;
         gameObject.GetComponent<Draw>().IsPlaying = false;
@@ -113,6 +115,7 @@ public class GameManager : MonoBehaviour
 
     public void GoBackToMenuAndRetryNoob()
     {
+        MusicScript.instance.PlayMenuMusique();
         _canvaMenu.SetActive(true);
         _canvaEndGame.SetActive(false);
         _canvaRules.SetActive(false);
