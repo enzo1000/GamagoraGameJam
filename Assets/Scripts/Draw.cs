@@ -26,7 +26,7 @@ public class Draw : MonoBehaviour
     private GameObject brushInstance;
     private LineRenderer brushLR;
     private Vector3 lastMousePos;
-    private List<Vector2> drawPoints;
+    private List<Vector3> drawPoints;
     private CrayType _crayType;
     private Color _brushColor;
     private float crayAmountWhite;
@@ -77,7 +77,7 @@ public class Draw : MonoBehaviour
         else if (Input.GetMouseButton(0))
         {
             Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = brushInstance.transform.position.z;
+            mousePos.z = -2;
 
             if (Vector3.Distance(mousePos, lastMousePos) > 0.3f)
             {
@@ -199,7 +199,7 @@ public class Draw : MonoBehaviour
             averagePoint += point;
         }
         averagePoint /= drawPoints.Count;
-
+        averagePoint.z = 0;
         float minScale = processMinDist(averagePoint);
         damageAllEye(minScale, averagePoint);
         drawPoints.Clear();
