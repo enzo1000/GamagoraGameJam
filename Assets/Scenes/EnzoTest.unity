@@ -1005,7 +1005,7 @@ PrefabInstance:
     - target: {fileID: 4269291507386155233, guid: 59335b24498df6549a4346d0d24a9495, type: 3}
       propertyPath: HeartBeatingSFX
       value: 
-      objectReference: {fileID: 8300000, guid: f11ab39855f58224381732f105e0efb5, type: 3}
+      objectReference: {fileID: 8300000, guid: c4132d71a26bc794b834d169d883ec0e, type: 3}
     - target: {fileID: 4269291507386155233, guid: 59335b24498df6549a4346d0d24a9495, type: 3}
       propertyPath: KnockingDoorSFX
       value: 
