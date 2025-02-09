@@ -41,6 +41,7 @@ public class Eye : MonoBehaviour
         {
             Destroy(this.gameObject);
             GameManager.Instance.AddToScore();
+            GetComponentInParent<EyeSpawner>().DiminueTimerAndDie();
             return;
         }
 
@@ -49,6 +50,7 @@ public class Eye : MonoBehaviour
         {
             Destroy(this.gameObject);
             GameManager.Instance.AddToScore();
+            GetComponentInParent<EyeSpawner>().DiminueTimerAndDie();
             return;
         }
         

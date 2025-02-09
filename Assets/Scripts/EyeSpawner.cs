@@ -25,8 +25,17 @@ public class EyeSpawner : MonoBehaviour
     [SerializeField] 
     private Vector2 _rightPoint;
     
+    [SerializeField] 
+    [Range(0.0001f, 0.1f)] private float _timeDiminutionBetweenSpawn;
+    
     private float _timer = 0f;
     private bool _isPlaying = false;
+    private float _spawn;
+
+    private void Start()
+    {
+        _spawn = _spawnInterval;
+    }
 
     public bool IsPlaying
     {
@@ -66,6 +75,28 @@ public class EyeSpawner : MonoBehaviour
             _timer = _spawnInterval;
         }
         _timer -= Time.deltaTime;
+    }
+
+    public void KillAllEye()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    public void ResetSpawnInterval()
+    {
+        _spawnInterval = _spawn;
+    }
+
+    public void DiminueTimerAndDie()
+    {
+        _spawnInterval -= _timeDiminutionBetweenSpawn;
+        if (GameManager.Instance.time < 180 && _spawnInterval <= 2)
+        {
+            _spawnInterval = 2;
+        }
     }
 
     public float GetAllDamage()

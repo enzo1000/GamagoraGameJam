@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class MusicScript : MonoBehaviour
@@ -44,6 +45,9 @@ public class MusicScript : MonoBehaviour
     public AudioClip LifeDraynSFX;
     public AudioClip DefeateSFX;
 
+    [Header("Golden SFX")]
+    public AudioClip GoldenSFX;
+    
     private AudioSource audioSource;
 
     private void Awake()
@@ -58,7 +62,6 @@ public class MusicScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     private void Start()
     {
         PlayMenuMusique();
@@ -67,16 +70,15 @@ public class MusicScript : MonoBehaviour
     public void PlayMenuMusique()
     {
         audioSource.clip = MenuMusique;
+        audioSource.loop = true;
         audioSource.Play();
     }
-
     public void PlayBoutonMenuSFX()
     {
         audioSource.clip = BoutonMenuSFX;
         audioSource.loop = false;
         audioSource.Play();
     }
-
     public void PlayExorcistSFX()
     {
         int rand = Mathf.FloorToInt(Random.Range(0, 3));
@@ -94,89 +96,135 @@ public class MusicScript : MonoBehaviour
         }
     }
 
-    public void PlayRandomAudioClipFirstEnviro()
+    public IEnumerator PlayRandomAudioClipFirstEnviro()
     {
-        int rand = Mathf.FloorToInt(Random.Range(0, 7));
-        if (rand == 0)
+        while (true)
         {
-            audioSource.PlayOneShot(OpeningDoorSFX);
-        }
-        else if (rand == 1)
-        {
-            audioSource.PlayOneShot(StepsSFX);
-        }
-        else if (rand == 2)
-        {
-            audioSource.PlayOneShot(GrincementSFX);
-        }
-        else if (rand == 3)
-        {
-            audioSource.PlayOneShot(ClosingDoorSFX);
-        }
-        else if (rand == 4)
-        {
-            audioSource.PlayOneShot(TockingRightSFX);
-        }
-        else if (rand == 5)
-        {
-            audioSource.PlayOneShot(TockingLeftSFX);
-        }
-        else if (rand == 6)
-        {
-            audioSource.PlayOneShot(KnockingDoorSFX);
-        }
-    }
-    public void PlayRandomAudioClipSecondEnviro()
-    {
-        int rand = Mathf.FloorToInt(Random.Range(0, 6));
-        if (rand == 0)
-        {
-            audioSource.PlayOneShot(OpeningDoorSFX);
-        }
-        else if (rand == 1)
-        {
-            audioSource.PlayOneShot(GougoutteSFX);
-        }
-        else if (rand == 2)
-        {
-            audioSource.PlayOneShot(ClosingDoorSFX);
-        }
-        else if (rand == 3)
-        {
-            audioSource.PlayOneShot(TockingRightSFX);
-        }
-        else if (rand == 4)
-        {
-            audioSource.PlayOneShot(TockingLeftSFX);
-        }
-        else if (rand == 5)
-        {
-            audioSource.PlayOneShot(KnockingDoorSFX);
-        }
-    }
-    public void PlayRandomAudioClipThirdEnviro()
-    {
-        int rand = Mathf.FloorToInt(Random.Range(0, 5));
-        if (rand == 0)
-        {
-            audioSource.PlayOneShot(WindSFX);
-        }
-        else if (rand == 1)
-        {
-            audioSource.PlayOneShot(GrillonSFX);
-        }
-        else if (rand == 2)
-        {
-            audioSource.PlayOneShot(WhisperingSFX);
-        }
-        else if (rand == 3)
-        {
-            audioSource.PlayOneShot(BreathingSFX);
-        }
-        else if (rand == 4)
-        {
-            audioSource.PlayOneShot(HeartBeatingSFX);
-        }
-    }
+            yield return new WaitForSeconds(10);
+            int rand = Mathf.FloorToInt(Random.Range(0, 7));
+            int randGold = Mathf.FloorToInt(Random.Range(0, 1000000));
 
+            if (randGold == 0)
+            {
+                audioSource.PlayOneShot(GoldenSFX);
+                continue;
+            }
+            
+            if (rand == 0)
+            {
+                audioSource.PlayOneShot(OpeningDoorSFX);
+            }
+            else if (rand == 1)
+            {
+                audioSource.PlayOneShot(StepsSFX);
+            }
+            else if (rand == 2)
+            {
+                audioSource.PlayOneShot(GrincementSFX);
+            }
+            else if (rand == 3)
+            {
+                audioSource.PlayOneShot(ClosingDoorSFX);
+            }
+            else if (rand == 4)
+            {
+                audioSource.PlayOneShot(TockingRightSFX);
+            }
+            else if (rand == 5)
+            {
+                audioSource.PlayOneShot(TockingLeftSFX);
+            }
+            else if (rand == 6)
+            {
+                audioSource.PlayOneShot(KnockingDoorSFX);
+            }
+        }
+    }
+    public IEnumerator PlayRandomAudioClipSecondEnviro()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(10);
+            int rand = Mathf.FloorToInt(Random.Range(0, 6));
+            int randGold = Mathf.FloorToInt(Random.Range(0, 1000000));
+
+            if (randGold == 0)
+            {
+                audioSource.PlayOneShot(GoldenSFX);
+                continue;
+            }
+            
+            if (rand == 0)
+            {
+                audioSource.PlayOneShot(OpeningDoorSFX);
+            }
+            else if (rand == 1)
+            {
+                audioSource.PlayOneShot(GougoutteSFX);
+            }
+            else if (rand == 2)
+            {
+                audioSource.PlayOneShot(ClosingDoorSFX);
+            }
+            else if (rand == 3)
+            {
+                audioSource.PlayOneShot(TockingRightSFX);
+            }
+            else if (rand == 4)
+            {
+                audioSource.PlayOneShot(TockingLeftSFX);
+            }
+            else if (rand == 5)
+            {
+                audioSource.PlayOneShot(KnockingDoorSFX);
+            }
+        }
+    }
+    public IEnumerator PlayRandomAudioClipThirdEnviro()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(10);
+            int rand = Mathf.FloorToInt(Random.Range(0, 5));
+            int randGold = Mathf.FloorToInt(Random.Range(0, 1000000));
+
+            if (randGold == 0)
+            {
+                audioSource.PlayOneShot(GoldenSFX);
+                continue;
+            }
+            
+            if (rand == 0)
+            {
+                audioSource.PlayOneShot(WindSFX);
+            }
+            else if (rand == 1)
+            {
+                audioSource.PlayOneShot(GrillonSFX);
+            }
+            else if (rand == 2)
+            {
+                audioSource.PlayOneShot(WhisperingSFX);
+            }
+            else if (rand == 3)
+            {
+                audioSource.PlayOneShot(BreathingSFX);
+            }
+            else if (rand == 4)
+            {
+                audioSource.PlayOneShot(HeartBeatingSFX);
+            }
+        }
+    }
+    
+    public void PlayDefeateSFX()
+    {
+        audioSource.clip = DefeateSFX;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+    public void PlayCraySFX()
+    {
+        audioSource.PlayOneShot(UsingCraySFX);
+    }
 }

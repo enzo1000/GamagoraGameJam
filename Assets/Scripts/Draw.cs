@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine.UI;
 
 public class Draw : MonoBehaviour
@@ -26,7 +25,7 @@ public class Draw : MonoBehaviour
     private GameObject brushInstance;
     private LineRenderer brushLR;
     private Vector3 lastMousePos;
-    private List<Vector2> drawPoints;
+    private List<Vector3> drawPoints;
     private CrayType _crayType;
     private Color _brushColor;
     private float crayAmountWhite;
@@ -41,6 +40,11 @@ public class Draw : MonoBehaviour
 
     //Init list at startup
     private void Start()
+    {   
+        ResetGame();
+    }
+
+    public void ResetGame()
     {
         drawPoints = new();
         crayAmountWhite = crayBar.fillAmount;
@@ -58,6 +62,14 @@ public class Draw : MonoBehaviour
         Drawing();
     }
 
+    public void DestroyTheCrayAndFlavien()
+    {
+        if (brushInstance != null)
+        {
+            Destroy(brushInstance);
+        }
+    }
+
     /// <summary>
     /// Fonction de drawing principale
     /// </summary>
@@ -67,14 +79,12 @@ public class Draw : MonoBehaviour
         {
             if (_crayType == CrayType.White)
                 initialCrayAmount = crayAmountWhite;
-            else if (_crayType == CrayType.Red)
-                initialCrayAmount = crayAmountRed;
             CreateBrush();
         }
         else if (Input.GetMouseButton(0))
         {
             Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0;
+            mousePos.z = -2;
 
             if (Vector3.Distance(mousePos, lastMousePos) > 0.3f)
             {
@@ -91,11 +101,11 @@ public class Draw : MonoBehaviour
             }
             else if (_crayType == CrayType.Red)
             {
-                crayAmountRed = initialCrayAmount;
                 crayBarRed.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountRed);
                 List<GameObject> _eyeToKill = processCrossOnEye();
                 foreach (var eye in _eyeToKill)
                 {
+                    MusicScript.instance.PlayExorcistSFX();
                     eye.GetComponent<Eye>().DoALotOfDamage();
                 }
                 _eyeToKill.Clear();
@@ -128,9 +138,9 @@ public class Draw : MonoBehaviour
     private void CreateBrush()
     {
         Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0;
+        mousePos.z = brush.transform.position.z;
 
-        brushInstance = Instantiate(brush, new(), Quaternion.identity);
+        brushInstance = Instantiate(brush, new(0,0,brush.transform.position.z), Quaternion.identity);
         brushLR = brushInstance.GetComponent<LineRenderer>();
         brushLR.endColor = _brushColor;
         brushLR.startColor = _brushColor;
@@ -138,6 +148,13 @@ public class Draw : MonoBehaviour
         //Size du brush à 2 donc deux points à l'initialisation
         brushLR.SetPosition(0, mousePos);
         brushLR.SetPosition(1, mousePos);
+        
+        if (_crayType == CrayType.White && crayAmountWhite <= 0f)
+            return;
+        if (_crayType == CrayType.Red && crayAmountRed <= 0f)
+            return;
+        
+        MusicScript.instance.PlayCraySFX();
     }
 
     /// <summary>
@@ -153,10 +170,10 @@ public class Draw : MonoBehaviour
         else if(_crayType == CrayType.Red)
             reduceCrayBarRed();
         
-        if (crayAmountWhite <= 0f)
-        {
+        if ( _crayType == CrayType.White && crayAmountWhite <= 0f)
             return;
-        }
+        if (_crayType == CrayType.Red && crayAmountRed <= 0f)
+            return;
 
         brushLR.positionCount++;
         int positionIndex = brushLR.positionCount - 1;
@@ -189,7 +206,7 @@ public class Draw : MonoBehaviour
             averagePoint += point;
         }
         averagePoint /= drawPoints.Count;
-
+        averagePoint.z = 0;
         float minScale = processMinDist(averagePoint);
         damageAllEye(minScale, averagePoint);
         drawPoints.Clear();
@@ -284,8 +301,10 @@ public class Draw : MonoBehaviour
                     MusicScript.instance.PlayExorcistSFX();
                     if(_crayType == CrayType.White)
                         recoverCrayBarWhite(crayRecover);
+
                     else if(_crayType == CrayType.Red)
                         recoverCrayBarRed(crayRecover);
+
                     eye.gameObject.GetComponent<Eye>().DoALotOfDamage();
                 }
             }
@@ -305,6 +324,10 @@ public class Draw : MonoBehaviour
         crayAmountWhite += recoverAmount;
         if (crayAmountWhite > 1f)
             crayAmountWhite = 1f;
+
+        if (_crayType == CrayType.White)
+            initialCrayAmount = crayAmountWhite;
+
         crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountWhite);
     }
     
@@ -313,7 +336,7 @@ public class Draw : MonoBehaviour
         crayAmountRed -= crayUsage;
         if (crayAmountRed < 0f)
             crayAmountRed = 0f;
-        
+
         crayBarRed.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountRed);
     }
     private void recoverCrayBarRed(float recoverAmount)
@@ -321,6 +344,7 @@ public class Draw : MonoBehaviour
         crayAmountRed += recoverAmount;
         if (crayAmountRed > 1f)
             crayAmountRed = 1f;
+
         crayBarRed.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountRed);
     }
 }
