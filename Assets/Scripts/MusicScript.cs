@@ -20,8 +20,21 @@ public class MusicScript : MonoBehaviour
     public AudioClip TockingSFX;
     public AudioClip GrincementSFX;
 
-    [Header("All SFX")]
-    public AudioClip WhispeingSFX;
+    [Header("SFX Second Enviro")]
+    public AudioClip GougoutteSFX;
+
+    [Header("SFX Third Enviro")]
+    public AudioClip WindSFX;
+    public AudioClip GrillonSFX;
+
+    [Header("SFX First & Second Enviro")]
+    public AudioClip OpeningDoorSFX;
+    public AudioClip ClosingDoorSFX;
+    public AudioClip KnockingDoorSFX;
+    
+
+    [Header("All Enviro SFX")]
+    public AudioClip WhisperingSFX;
     public AudioClip BreathingSFX;
     public AudioClip HeartBeatingSFX;
 
