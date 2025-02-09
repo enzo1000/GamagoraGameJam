@@ -30,6 +30,12 @@ public class EyeSpawner : MonoBehaviour
     
     private float _timer = 0f;
     private bool _isPlaying = false;
+    private float _spawn;
+
+    private void Start()
+    {
+        _spawn = _spawnInterval;
+    }
 
     public bool IsPlaying
     {
@@ -69,6 +75,19 @@ public class EyeSpawner : MonoBehaviour
             _timer = _spawnInterval;
         }
         _timer -= Time.deltaTime;
+    }
+
+    public void KillAllEye()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
+    public void ResetSpawnInterval()
+    {
+        _spawnInterval = _spawn;
     }
 
     public void DiminueTimerAndDie()

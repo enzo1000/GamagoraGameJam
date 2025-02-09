@@ -81,7 +81,10 @@ public class GameManager : MonoBehaviour
         spawner.IsPlaying = true;
         MusicScript.instance.PlayBoutonMenuSFX();
         gameObject.GetComponent<Draw>().IsPlaying = true;
+        gameObject.GetComponent<Draw>().ResetGame();
         _canvaMenu.SetActive(false);
+        spawner.KillAllEye();
+        spawner.ResetSpawnInterval();
         RandomScene();
     }
 

@@ -41,6 +41,11 @@ public class Draw : MonoBehaviour
 
     //Init list at startup
     private void Start()
+    {   
+        ResetGame();
+    }
+
+    public void ResetGame()
     {
         drawPoints = new();
         crayAmountWhite = crayBar.fillAmount;
