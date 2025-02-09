@@ -5,10 +5,20 @@ using UnityEngine.UI;
 
 public class Draw : MonoBehaviour
 {
+    public enum CrayType
+    {
+        White,
+        Red
+    }
+
+    public Texture2D cursorRed;
+    public Texture2D cursorWhite;
+    
     public Camera cam;
     public Image crayBar;
     public Image crayBarRed;
     public GameObject brush;
+    public Transform spawner;
 
     [Range(0.001f, 0.1f)] public float crayUsage;
     [Range(0.1f, 1f)] public float crayRecover;
@@ -17,8 +27,10 @@ public class Draw : MonoBehaviour
     private LineRenderer brushLR;
     private Vector3 lastMousePos;
     private List<Vector2> drawPoints;
-
-    private float crayAmount;
+    private CrayType _crayType;
+    private Color _brushColor;
+    private float crayAmountWhite;
+    private float crayAmountRed;
     private float initialCrayAmount = 1f;
     private bool _isPlaying = false;
     public bool IsPlaying
@@ -31,8 +43,11 @@ public class Draw : MonoBehaviour
     private void Start()
     {
         drawPoints = new();
-        crayAmount = crayBar.fillAmount;
-        crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmount);
+        crayAmountWhite = crayBar.fillAmount;
+        crayAmountRed = crayBarRed.fillAmount;
+        crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountWhite);
+        crayBarRed.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountRed);
+        _brushColor = Color.white;
     }
 
     //Draw
@@ -50,7 +65,10 @@ public class Draw : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            initialCrayAmount = crayAmount;
+            if (_crayType == CrayType.White)
+                initialCrayAmount = crayAmountWhite;
+            else if (_crayType == CrayType.Red)
+                initialCrayAmount = crayAmountRed;
             CreateBrush();
         }
         else if (Input.GetMouseButton(0))
@@ -66,10 +84,39 @@ public class Draw : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            crayAmount = initialCrayAmount;
-            crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmount);
+            if (_crayType == CrayType.White)
+            {
+                crayAmountWhite = initialCrayAmount;
+                crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountWhite);
+            }
+            else if (_crayType == CrayType.Red)
+            {
+                crayAmountRed = initialCrayAmount;
+                crayBarRed.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountRed);
+                List<GameObject> _eyeToKill = processCrossOnEye();
+                foreach (var eye in _eyeToKill)
+                {
+                    Destroy(eye);
+                }
+                _eyeToKill.Clear();
+            }
             drawPoints.Clear();
             Destroy(brushInstance);
+        } 
+        else if (Input.GetMouseButtonUp(1))
+        {
+            if (_crayType == CrayType.White)
+            {
+                _crayType = CrayType.Red;
+                Cursor.SetCursor(cursorRed, Vector2.zero, CursorMode.Auto);
+                _brushColor = Color.red;
+            }
+            else if (_crayType == CrayType.Red)
+            {
+                _crayType = CrayType.White;
+                Cursor.SetCursor(cursorWhite, Vector2.zero, CursorMode.Auto);
+                _brushColor = Color.white;
+            }
         }
         //else
            //DestroyTheCrayAndWorld();
@@ -83,9 +130,11 @@ public class Draw : MonoBehaviour
         Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
 
-        brushInstance = Instantiate(brush, mousePos, Quaternion.identity);
+        brushInstance = Instantiate(brush, new(), Quaternion.identity);
         brushLR = brushInstance.GetComponent<LineRenderer>();
-
+        brushLR.endColor = _brushColor;
+        brushLR.startColor = _brushColor;
+        
         //Size du brush à 2 donc deux points à l'initialisation
         brushLR.SetPosition(0, mousePos);
         brushLR.SetPosition(1, mousePos);
@@ -99,8 +148,12 @@ public class Draw : MonoBehaviour
     /// <param name="pointPos"></param>
     private void AddAPoint(Vector3 pointPos)
     {
-        reduceCrayBar();
-        if (crayAmount <= 0f)
+        if(_crayType == CrayType.White)
+            reduceCrayBarWhite();
+        else if(_crayType == CrayType.Red)
+            reduceCrayBarRed();
+        
+        if (crayAmountWhite <= 0f)
         {
             return;
         }
@@ -109,7 +162,7 @@ public class Draw : MonoBehaviour
         int positionIndex = brushLR.positionCount - 1;
         brushLR.SetPosition(positionIndex, pointPos);
         
-        if (processCrossingGigaChad(pointPos))
+        if (_crayType == CrayType.White && processCrossingGigaChad(pointPos))
         {
             averageCenterEnjoyer();
             //DestroyTheCrayAndWorld();
@@ -122,9 +175,6 @@ public class Draw : MonoBehaviour
 
         //Stocke les points du tracé dans le tableau drawPoints
         drawPoints.Add(pointPos);
-        Mesh mesh = new();
-        brushLR.BakeMesh(mesh, true);
-        brushInstance.GetComponent<MeshCollider>().sharedMesh = mesh;
     }
 
     /// <summary>
@@ -161,13 +211,44 @@ public class Draw : MonoBehaviour
             if (Vector3.Distance(pts, nouveauPoint) < 0.25f)
             {
                 brushLR.positionCount = 0;
-                initialCrayAmount = crayAmount;
+                initialCrayAmount = crayAmountWhite;
                 return true;
             }
         }
         return false;
     }
 
+    private List<GameObject> processCrossOnEye()
+    {
+        List<GameObject> eyeToKill = new();
+        
+        foreach (Transform child in spawner)
+        {
+            bool inBound = false;
+            bool outBound = false;
+            foreach (Vector2 point in drawPoints)
+            {
+                if (inBound && outBound)
+                    break;
+                
+                if(!inBound)
+                    inBound = InBounds(point, child.GetChild(0).position, child.GetChild(3).position);
+                if(!outBound)
+                    outBound = !InBounds(point, child.GetChild(0).position, child.GetChild(3).position);
+            }
+            if (inBound && outBound)
+                eyeToKill.Add(child.gameObject);
+        }
+        return eyeToKill;
+    }
+
+    private bool InBounds(Vector2 point, Vector2 leftUp, Vector2 rightDown)
+    {
+        if (point.x < leftUp.x || point.x > rightDown.x || point.y > leftUp.y || point.y < rightDown.y)
+            return false;
+        return true;
+    }
+    
     /// <summary>
     /// Function dedicated to process le rayon minimal du cercle trace afin de faire des degats aux yeux
     /// </summary>
@@ -201,26 +282,45 @@ public class Draw : MonoBehaviour
                 if (compt >= 5)
                 {
                     MusicScript.instance.PlayExorcistSFX();
-                    recoverCrayBar(crayRecover);
+                    if(_crayType == CrayType.White)
+                        recoverCrayBarWhite(crayRecover);
+                    else if(_crayType == CrayType.Red)
+                        recoverCrayBarRed(crayRecover);
                     eye.gameObject.GetComponent<Eye>().DoALotOfDamage();
                 }
             }
         }
     }
 
-    private void reduceCrayBar()
+    private void reduceCrayBarWhite()
     {
-        crayAmount -= crayUsage;
-        if (crayAmount < 0f)
-            crayAmount = 0f;
+        crayAmountWhite -= crayUsage;
+        if (crayAmountWhite < 0f)
+            crayAmountWhite = 0f;
         
-        crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmount);
+        crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountWhite);
     }
-    private void recoverCrayBar(float recoverAmount)
+    private void recoverCrayBarWhite(float recoverAmount)
     {
-        crayAmount += recoverAmount;
-        if (crayAmount > 1f)
-            crayAmount = 1f;
-        crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmount);
+        crayAmountWhite += recoverAmount;
+        if (crayAmountWhite > 1f)
+            crayAmountWhite = 1f;
+        crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountWhite);
+    }
+    
+    private void reduceCrayBarRed()
+    {
+        crayAmountRed -= crayUsage;
+        if (crayAmountRed < 0f)
+            crayAmountRed = 0f;
+        
+        crayBarRed.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountRed);
+    }
+    private void recoverCrayBarRed(float recoverAmount)
+    {
+        crayAmountRed += recoverAmount;
+        if (crayAmountRed > 1f)
+            crayAmountRed = 1f;
+        crayBarRed.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountRed);
     }
 }
