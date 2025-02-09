@@ -1059,10 +1059,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EyeSpawner
       objectReference: {fileID: 0}
-    - target: {fileID: 4738350093926755925, guid: f6f2c4f15ac983842a91a514bb1ef4c8, type: 3}
-      propertyPath: _timeDiminutionBetweenSpawn
-      value: 0.05
-      objectReference: {fileID: 0}
     - target: {fileID: 8272518261441414467, guid: f6f2c4f15ac983842a91a514bb1ef4c8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

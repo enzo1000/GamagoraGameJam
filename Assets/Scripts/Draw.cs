@@ -72,7 +72,7 @@ public class Draw : MonoBehaviour
         else if (Input.GetMouseButton(0))
         {
             Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.z = 0;
+            mousePos.z = brushInstance.transform.position.z;
 
             if (Vector3.Distance(mousePos, lastMousePos) > 0.3f)
             {
@@ -126,9 +126,9 @@ public class Draw : MonoBehaviour
     private void CreateBrush()
     {
         Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0;
+        mousePos.z = brush.transform.position.z;
 
-        brushInstance = Instantiate(brush, new(), Quaternion.identity);
+        brushInstance = Instantiate(brush, new(0,0,brush.transform.position.z), Quaternion.identity);
         brushLR = brushInstance.GetComponent<LineRenderer>();
         brushLR.endColor = _brushColor;
         brushLR.startColor = _brushColor;

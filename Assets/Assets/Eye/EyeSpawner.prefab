@@ -56,6 +56,6 @@ MonoBehaviour:
   - prefab: {fileID: 6726856852480106046, guid: fa1968e46bfd606469c2361c41b641c7, type: 3}
     probability: 20
   _spawnInterval: 5
-  _leftPoint: {x: -2, y: -1}
-  _rightPoint: {x: 2, y: 1}
+  _leftPoint: {x: -3, y: -1.5}
+  _rightPoint: {x: 3, y: 1.5}
   _timeDiminutionBetweenSpawn: 0.1
