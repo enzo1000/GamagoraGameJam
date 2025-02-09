@@ -131,7 +131,14 @@ public class GameManager : MonoBehaviour
         _canvaRules.SetActive(false);
     }
 
-    public void HowToPlayToThisGame()
+    public void GoBackToMenu()
+    {
+        _canvaMenu.SetActive(true);
+        _canvaEndGame.SetActive(false);
+        _canvaRules.SetActive(false);
+    }
+
+        public void HowToPlayToThisGame()
     {
         _canvaMenu.SetActive(false);
         _canvaRules.SetActive(true);
