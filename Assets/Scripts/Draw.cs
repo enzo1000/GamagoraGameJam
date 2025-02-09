@@ -67,8 +67,6 @@ public class Draw : MonoBehaviour
         {
             if (_crayType == CrayType.White)
                 initialCrayAmount = crayAmountWhite;
-            else if (_crayType == CrayType.Red)
-                initialCrayAmount = crayAmountRed;
             CreateBrush();
         }
         else if (Input.GetMouseButton(0))
@@ -91,7 +89,6 @@ public class Draw : MonoBehaviour
             }
             else if (_crayType == CrayType.Red)
             {
-                crayAmountRed = initialCrayAmount;
                 crayBarRed.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountRed);
                 List<GameObject> _eyeToKill = processCrossOnEye();
                 foreach (var eye in _eyeToKill)
@@ -305,6 +302,10 @@ public class Draw : MonoBehaviour
         crayAmountWhite += recoverAmount;
         if (crayAmountWhite > 1f)
             crayAmountWhite = 1f;
+
+        if (_crayType == CrayType.White)
+            initialCrayAmount = crayAmountWhite;
+
         crayBar.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountWhite);
     }
     
@@ -313,7 +314,7 @@ public class Draw : MonoBehaviour
         crayAmountRed -= crayUsage;
         if (crayAmountRed < 0f)
             crayAmountRed = 0f;
-        
+
         crayBarRed.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountRed);
     }
     private void recoverCrayBarRed(float recoverAmount)
@@ -321,6 +322,7 @@ public class Draw : MonoBehaviour
         crayAmountRed += recoverAmount;
         if (crayAmountRed > 1f)
             crayAmountRed = 1f;
+
         crayBarRed.gameObject.GetComponent<Animator>().SetFloat("percent", crayAmountRed);
     }
 }

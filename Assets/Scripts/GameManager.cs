@@ -21,7 +21,17 @@ public class GameManager : MonoBehaviour
     private GameObject _canvaEndGame;
 
     [SerializeField] private Image _lifeBar;
-     
+
+    public Material enviroUn;
+    public Material enviroDeux;
+    public Material enviroTrois;
+
+    public Light lighUn;
+    public Light lighDeux;
+    public Light lighTrois;
+
+    public GameObject enviroPlane;
+
     private float _time;
     private bool _isPlaying;
     private int _score;
@@ -66,6 +76,30 @@ public class GameManager : MonoBehaviour
         MusicScript.instance.PlayBoutonMenuSFX();
         gameObject.GetComponent<Draw>().IsPlaying = true;
         _canvaMenu.SetActive(false);
+        RandomScene();
+    }
+
+    public void RandomScene()
+    {
+        int rand = Mathf.FloorToInt(UnityEngine.Random.Range(0, 3));
+        if (rand == 0)
+        {
+            lighUn.gameObject.SetActive(true);
+            enviroPlane.GetComponent<MeshRenderer>().material = enviroUn;
+            StartCoroutine(MusicScript.instance.PlayRandomAudioClipFirstEnviro());
+        }
+        else if (rand == 1)
+        {
+            lighDeux.gameObject.SetActive(true);
+            enviroPlane.GetComponent<MeshRenderer>().material = enviroDeux;
+            StartCoroutine(MusicScript.instance.PlayRandomAudioClipSecondEnviro());
+        }
+        else
+        {
+            lighTrois.gameObject.SetActive(true);
+            enviroPlane.GetComponent<MeshRenderer>().material = enviroTrois;
+            StartCoroutine(MusicScript.instance.PlayRandomAudioClipThirdEnviro());
+        }
     }
 
     public void EndGameBecauseUNoob()
