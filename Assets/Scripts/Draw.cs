@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine.UI;
 
 public class Draw : MonoBehaviour
@@ -61,6 +60,14 @@ public class Draw : MonoBehaviour
         if (!_isPlaying)
             return;
         Drawing();
+    }
+
+    public void DestroyTheCrayAndFlavien()
+    {
+        if (brushInstance != null)
+        {
+            Destroy(brushInstance);
+        }
     }
 
     /// <summary>

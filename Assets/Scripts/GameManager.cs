@@ -118,6 +118,7 @@ public class GameManager : MonoBehaviour
         _isPlaying = false;
         spawner.IsPlaying = false;
         gameObject.GetComponent<Draw>().IsPlaying = false;
+        gameObject.GetComponent<Draw>().DestroyTheCrayAndFlavien();
         _canvaEndGame.SetActive(true);
         _canvaEndGame.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = "You've succumbed to the evil spirit in " + (int)_time + " seconds";
     }
