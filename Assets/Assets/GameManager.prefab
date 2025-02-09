@@ -3289,8 +3289,8 @@ MonoBehaviour:
   crayBarRed: {fileID: 8984116052759143051}
   brush: {fileID: 3734407752576004256, guid: 8da6b8a20b40cb9469207b24cc5bf33b, type: 3}
   spawner: {fileID: 0}
-  crayUsage: 0.0163
-  crayRecover: 1
+  crayUsage: 0.025
+  crayRecover: 0.25
 --- !u!114 &1003945895530970760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3308,6 +3308,13 @@ MonoBehaviour:
   _canvaRules: {fileID: 4837873995355255564}
   _canvaEndGame: {fileID: 3515808987305331853}
   _lifeBar: {fileID: 9046489120705298775}
+  enviroUn: {fileID: 0}
+  enviroDeux: {fileID: 0}
+  enviroTrois: {fileID: 0}
+  lighUn: {fileID: 0}
+  lighDeux: {fileID: 0}
+  lighTrois: {fileID: 0}
+  enviroPlane: {fileID: 0}
 --- !u!114 &4269291507386155233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3326,17 +3333,22 @@ MonoBehaviour:
   ExorcistSFX2: {fileID: 0}
   ExorcistSFX3: {fileID: 0}
   StepsSFX: {fileID: 0}
-  TockingSFX: {fileID: 0}
   GrincementSFX: {fileID: 0}
   GougoutteSFX: {fileID: 0}
   WindSFX: {fileID: 0}
   GrillonSFX: {fileID: 0}
   OpeningDoorSFX: {fileID: 0}
   ClosingDoorSFX: {fileID: 0}
+  TockingRightSFX: {fileID: 0}
+  TockingLeftSFX: {fileID: 0}
   KnockingDoorSFX: {fileID: 0}
   WhisperingSFX: {fileID: 0}
   BreathingSFX: {fileID: 0}
   HeartBeatingSFX: {fileID: 0}
+  UsingCraySFX: {fileID: 0}
+  BreakingCraySFX: {fileID: 0}
+  LifeDraynSFX: {fileID: 0}
+  DefeateSFX: {fileID: 0}
 --- !u!82 &8470429003137408117
 AudioSource:
   m_ObjectHideFlags: 0

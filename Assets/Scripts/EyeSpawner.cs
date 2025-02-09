@@ -74,6 +74,10 @@ public class EyeSpawner : MonoBehaviour
     public void DiminueTimerAndDie()
     {
         _spawnInterval -= _timeDiminutionBetweenSpawn;
+        if (GameManager.Instance.time < 180 && _spawnInterval <= 2)
+        {
+            _spawnInterval = 2;
+        }
     }
 
     public float GetAllDamage()

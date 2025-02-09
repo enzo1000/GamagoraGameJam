@@ -36,6 +36,11 @@ public class GameManager : MonoBehaviour
     private bool _isPlaying;
     private int _score;
 
+    public float time
+    {
+        get => _time;
+    }
+
     private void Awake()
     {
         if (instance == null)
@@ -72,6 +77,7 @@ public class GameManager : MonoBehaviour
         _isPlaying = true;
         _time = 0;
         _score = 0;
+        _lifeBar.fillAmount = 1f;
         spawner.IsPlaying = true;
         MusicScript.instance.PlayBoutonMenuSFX();
         gameObject.GetComponent<Draw>().IsPlaying = true;

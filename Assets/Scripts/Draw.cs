@@ -128,8 +128,6 @@ public class Draw : MonoBehaviour
         Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
 
-        MusicScript.instance.PlayCraySFX();
-
         brushInstance = Instantiate(brush, new(), Quaternion.identity);
         brushLR = brushInstance.GetComponent<LineRenderer>();
         brushLR.endColor = _brushColor;
@@ -138,6 +136,13 @@ public class Draw : MonoBehaviour
         //Size du brush à 2 donc deux points à l'initialisation
         brushLR.SetPosition(0, mousePos);
         brushLR.SetPosition(1, mousePos);
+        
+        if (_crayType == CrayType.White && crayAmountWhite <= 0f)
+            return;
+        if (_crayType == CrayType.Red && crayAmountRed <= 0f)
+            return;
+        
+        MusicScript.instance.PlayCraySFX();
     }
 
     /// <summary>
@@ -153,10 +158,10 @@ public class Draw : MonoBehaviour
         else if(_crayType == CrayType.Red)
             reduceCrayBarRed();
         
-        if (crayAmountWhite <= 0f)
-        {
+        if ( _crayType == CrayType.White && crayAmountWhite <= 0f)
             return;
-        }
+        if (_crayType == CrayType.Red && crayAmountRed <= 0f)
+            return;
 
         brushLR.positionCount++;
         int positionIndex = brushLR.positionCount - 1;
