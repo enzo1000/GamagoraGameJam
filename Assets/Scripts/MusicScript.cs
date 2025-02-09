@@ -45,6 +45,9 @@ public class MusicScript : MonoBehaviour
     public AudioClip LifeDraynSFX;
     public AudioClip DefeateSFX;
 
+    [Header("Golden SFX")]
+    public AudioClip GoldenSFX;
+    
     private AudioSource audioSource;
 
     private void Awake()
@@ -99,6 +102,14 @@ public class MusicScript : MonoBehaviour
         {
             yield return new WaitForSeconds(10);
             int rand = Mathf.FloorToInt(Random.Range(0, 7));
+            int randGold = Mathf.FloorToInt(Random.Range(0, 1000000));
+
+            if (randGold == 0)
+            {
+                audioSource.PlayOneShot(GoldenSFX);
+                continue;
+            }
+            
             if (rand == 0)
             {
                 audioSource.PlayOneShot(OpeningDoorSFX);
@@ -135,6 +146,14 @@ public class MusicScript : MonoBehaviour
         {
             yield return new WaitForSeconds(10);
             int rand = Mathf.FloorToInt(Random.Range(0, 6));
+            int randGold = Mathf.FloorToInt(Random.Range(0, 1000000));
+
+            if (randGold == 0)
+            {
+                audioSource.PlayOneShot(GoldenSFX);
+                continue;
+            }
+            
             if (rand == 0)
             {
                 audioSource.PlayOneShot(OpeningDoorSFX);
@@ -167,6 +186,14 @@ public class MusicScript : MonoBehaviour
         {
             yield return new WaitForSeconds(10);
             int rand = Mathf.FloorToInt(Random.Range(0, 5));
+            int randGold = Mathf.FloorToInt(Random.Range(0, 1000000));
+
+            if (randGold == 0)
+            {
+                audioSource.PlayOneShot(GoldenSFX);
+                continue;
+            }
+            
             if (rand == 0)
             {
                 audioSource.PlayOneShot(WindSFX);

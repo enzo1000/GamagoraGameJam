@@ -3349,6 +3349,7 @@ MonoBehaviour:
   BreakingCraySFX: {fileID: 0}
   LifeDraynSFX: {fileID: 0}
   DefeateSFX: {fileID: 0}
+  GoldenSFX: {fileID: 8300000, guid: 910092137252e544197359ccb7ab7716, type: 3}
 --- !u!82 &8470429003137408117
 AudioSource:
   m_ObjectHideFlags: 0
