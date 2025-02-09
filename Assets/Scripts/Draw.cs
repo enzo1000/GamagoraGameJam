@@ -96,7 +96,7 @@ public class Draw : MonoBehaviour
                 List<GameObject> _eyeToKill = processCrossOnEye();
                 foreach (var eye in _eyeToKill)
                 {
-                    Destroy(eye);
+                    eye.GetComponent<Eye>().DoALotOfDamage();
                 }
                 _eyeToKill.Clear();
             }
