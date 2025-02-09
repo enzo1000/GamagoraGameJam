@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     private GameObject _canvaMenu;
 
     [SerializeField] 
+    private GameObject _canvaRules;
+    
+    [SerializeField] 
     private GameObject _canvaEndGame;
 
     [SerializeField] private Image _lifeBar;
@@ -71,14 +74,20 @@ public class GameManager : MonoBehaviour
         spawner.IsPlaying = false;
         gameObject.GetComponent<Draw>().IsPlaying = false;
         _canvaEndGame.SetActive(true);
-        _canvaEndGame.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().text = "You survived during " + (int)_time + " seconds";
-        _canvaEndGame.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = "You survived at " + _score + " eyes";
+        _canvaEndGame.transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().text = "You've succumbed to the evil spirit in " + (int)_time + " seconds";
     }
 
     public void GoBackToMenuAndRetryNoob()
     {
         _canvaMenu.SetActive(true);
         _canvaEndGame.SetActive(false);
+        _canvaRules.SetActive(false);
+    }
+
+    public void HowToPlayToThisGame()
+    {
+        _canvaMenu.SetActive(false);
+        _canvaRules.SetActive(true);
     }
     
     public void QuitThisFuckingGame()
