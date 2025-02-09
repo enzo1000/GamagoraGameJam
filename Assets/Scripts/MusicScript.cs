@@ -17,7 +17,6 @@ public class MusicScript : MonoBehaviour
 
     [Header("SFX First Enviro")]
     public AudioClip StepsSFX;
-    public AudioClip TockingSFX;
     public AudioClip GrincementSFX;
 
     [Header("SFX Second Enviro")]
@@ -30,13 +29,20 @@ public class MusicScript : MonoBehaviour
     [Header("SFX First & Second Enviro")]
     public AudioClip OpeningDoorSFX;
     public AudioClip ClosingDoorSFX;
+    public AudioClip TockingRightSFX;
+    public AudioClip TockingLeftSFX;
     public AudioClip KnockingDoorSFX;
-    
 
     [Header("All Enviro SFX")]
     public AudioClip WhisperingSFX;
     public AudioClip BreathingSFX;
     public AudioClip HeartBeatingSFX;
+
+    [Header("Gameplay SFX")]
+    public AudioClip UsingCraySFX;
+    public AudioClip BreakingCraySFX;
+    public AudioClip LifeDraynSFX;
+    public AudioClip DefeateSFX;
 
     private AudioSource audioSource;
 
@@ -66,7 +72,9 @@ public class MusicScript : MonoBehaviour
 
     public void PlayBoutonMenuSFX()
     {
-        audioSource.PlayOneShot(BoutonMenuSFX);
+        audioSource.clip = BoutonMenuSFX;
+        audioSource.loop = false;
+        audioSource.Play();
     }
 
     public void PlayExorcistSFX()
@@ -75,12 +83,100 @@ public class MusicScript : MonoBehaviour
         if (rand == 0)
         {
             audioSource.PlayOneShot(ExorcistSFX1);
-        } else if (rand == 1)
+        }
+        else if (rand == 1)
         {
             audioSource.PlayOneShot(ExorcistSFX2);
-        } else
+        }
+        else
         {
             audioSource.PlayOneShot(ExorcistSFX3);
         }
     }
+
+    public void PlayRandomAudioClipFirstEnviro()
+    {
+        int rand = Mathf.FloorToInt(Random.Range(0, 7));
+        if (rand == 0)
+        {
+            audioSource.PlayOneShot(OpeningDoorSFX);
+        }
+        else if (rand == 1)
+        {
+            audioSource.PlayOneShot(StepsSFX);
+        }
+        else if (rand == 2)
+        {
+            audioSource.PlayOneShot(GrincementSFX);
+        }
+        else if (rand == 3)
+        {
+            audioSource.PlayOneShot(ClosingDoorSFX);
+        }
+        else if (rand == 4)
+        {
+            audioSource.PlayOneShot(TockingRightSFX);
+        }
+        else if (rand == 5)
+        {
+            audioSource.PlayOneShot(TockingLeftSFX);
+        }
+        else if (rand == 6)
+        {
+            audioSource.PlayOneShot(KnockingDoorSFX);
+        }
+    }
+    public void PlayRandomAudioClipSecondEnviro()
+    {
+        int rand = Mathf.FloorToInt(Random.Range(0, 6));
+        if (rand == 0)
+        {
+            audioSource.PlayOneShot(OpeningDoorSFX);
+        }
+        else if (rand == 1)
+        {
+            audioSource.PlayOneShot(GougoutteSFX);
+        }
+        else if (rand == 2)
+        {
+            audioSource.PlayOneShot(ClosingDoorSFX);
+        }
+        else if (rand == 3)
+        {
+            audioSource.PlayOneShot(TockingRightSFX);
+        }
+        else if (rand == 4)
+        {
+            audioSource.PlayOneShot(TockingLeftSFX);
+        }
+        else if (rand == 5)
+        {
+            audioSource.PlayOneShot(KnockingDoorSFX);
+        }
+    }
+    public void PlayRandomAudioClipThirdEnviro()
+    {
+        int rand = Mathf.FloorToInt(Random.Range(0, 5));
+        if (rand == 0)
+        {
+            audioSource.PlayOneShot(WindSFX);
+        }
+        else if (rand == 1)
+        {
+            audioSource.PlayOneShot(GrillonSFX);
+        }
+        else if (rand == 2)
+        {
+            audioSource.PlayOneShot(WhisperingSFX);
+        }
+        else if (rand == 3)
+        {
+            audioSource.PlayOneShot(BreathingSFX);
+        }
+        else if (rand == 4)
+        {
+            audioSource.PlayOneShot(HeartBeatingSFX);
+        }
+    }
+
 }
