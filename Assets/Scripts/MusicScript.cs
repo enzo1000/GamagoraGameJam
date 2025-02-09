@@ -67,6 +67,7 @@ public class MusicScript : MonoBehaviour
     public void PlayMenuMusique()
     {
         audioSource.clip = MenuMusique;
+        audioSource.loop = true;
         audioSource.Play();
     }
     public void PlayBoutonMenuSFX()
@@ -187,5 +188,16 @@ public class MusicScript : MonoBehaviour
                 audioSource.PlayOneShot(HeartBeatingSFX);
             }
         }
+    }
+    
+    public void PlayDefeateSFX()
+    {
+        audioSource.clip = DefeateSFX;
+        audioSource.loop = true;
+        audioSource.Play();
+    }
+    public void PlayCraySFX()
+    {
+        audioSource.PlayOneShot(UsingCraySFX);
     }
 }

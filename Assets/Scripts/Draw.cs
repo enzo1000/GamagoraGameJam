@@ -93,6 +93,7 @@ public class Draw : MonoBehaviour
                 List<GameObject> _eyeToKill = processCrossOnEye();
                 foreach (var eye in _eyeToKill)
                 {
+                    MusicScript.instance.PlayExorcistSFX();
                     eye.GetComponent<Eye>().DoALotOfDamage();
                 }
                 _eyeToKill.Clear();
@@ -126,6 +127,8 @@ public class Draw : MonoBehaviour
     {
         Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
+
+        MusicScript.instance.PlayCraySFX();
 
         brushInstance = Instantiate(brush, new(), Quaternion.identity);
         brushLR = brushInstance.GetComponent<LineRenderer>();
@@ -281,8 +284,10 @@ public class Draw : MonoBehaviour
                     MusicScript.instance.PlayExorcistSFX();
                     if(_crayType == CrayType.White)
                         recoverCrayBarWhite(crayRecover);
+
                     else if(_crayType == CrayType.Red)
                         recoverCrayBarRed(crayRecover);
+
                     eye.gameObject.GetComponent<Eye>().DoALotOfDamage();
                 }
             }
